@@ -2,6 +2,7 @@ import Lenis from "lenis";
 import { useEffect } from "react";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Contributions from "./components/Contributions";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
@@ -42,6 +43,7 @@ function App() {
       <main className="w-full overflow-x-hidden">
         <Hero />
         <About />
+        <Contributions />
         <Projects />
         <Stack />
         <Marquee />
