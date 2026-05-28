@@ -8,6 +8,7 @@ import {
   Twitter,
 } from "lucide-react";
 import React, { useEffect, useRef } from "react";
+import WordReveal from "./ui/WordReveal";
 
 const Contact: React.FC = () => {
   const springX = useSpring(0, { stiffness: 100, damping: 20 });
@@ -75,7 +76,7 @@ const Contact: React.FC = () => {
         {/* Section heading */}
         <div className="mb-12 md:mb-16 lg:mb-24 overflow-hidden">
           <motion.h2
-            className="font-pixel text-lg md:text-2xl lg:text-4xl"
+            className="font-pixel text-md md:text-xl lg:text-3xl"
             style={{ fontFamily: '"Press Start 2P", cursive' }}
             initial={{ clipPath: "inset(0 100% 0 0)" }}
             whileInView={{ clipPath: "inset(0 0% 0 0)" }}
@@ -84,46 +85,73 @@ const Contact: React.FC = () => {
           >
             LET'S WORK TOGETHER
           </motion.h2>
+          {/* <motion.div
+            className="h-px bg-off-white/20 origin-left mt-4"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{
+              duration: 1.2,
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            viewport={{ once: true }}
+          /> */}
         </div>
 
         {/* Large magnetic text */}
         <div ref={containerRef} className="relative">
-          <motion.a
-            href="mailto:calebephrem@proton.me"
-            className="block group relative overflow-hidden w-full"
-            style={{
-              x: springX,
-              y: springY,
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.9,
+              delay: 0.2,
+              ease: [0.25, 0.46, 0.45, 0.94],
             }}
-            transition={{ type: "spring", stiffness: 150, damping: 20 }}
+            viewport={{ once: true }}
           >
-            <motion.h3
-              className="font-pixel text-8xl md:text-6xl lg:text-8xl leading-none fill-text transition-all duration-500 group-hover:[-webkit-text-fill-color:#FAFAFA] hoverable text-center md:text-left"
-              style={{
-                fontFamily: '"Press Start 2P", cursive',
-                WebkitTextStrokeWidth: "2px",
-                WebkitTextStrokeColor: "#FAFAFA",
-                WebkitTextFillColor: "transparent",
-                animation: "blink-fill 3s step-end infinite",
-              }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+            <motion.a
+              href="mailto:calebephrem@proton.me"
+              className="block group relative w-full"
+              style={{ x: springX, y: springY }}
+              transition={{ type: "spring", stiffness: 150, damping: 20 }}
             >
-              SAY HI
-            </motion.h3>
-          </motion.a>
+              <motion.h3
+                className="font-pixel text-8xl md:text-6xl lg:text-8xl leading-none fill-text transition-all duration-500 group-hover:[-webkit-text-fill-color:#FAFAFA] hoverable text-center md:text-left"
+                style={{
+                  fontFamily: '"Press Start 2P", cursive',
+                  WebkitTextStrokeWidth: "2px",
+                  WebkitTextStrokeColor: "#FAFAFA",
+                  WebkitTextFillColor: "transparent",
+                  animation: "blink-fill 3s step-end infinite",
+                }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                SAY HI
+              </motion.h3>
+            </motion.a>
+          </motion.div>
 
           <div className="mt-8 md:mt-12 lg:mt-16">
-            <p className="text-lg md:text-xl lg:text-2xl font-light text-off-white/70 max-w-2xl leading-relaxed mb-6 md:mb-8">
-              Have a project in mind? I'd love to hear about it. Let's create
-              something amazing together.
-            </p>
+            <WordReveal
+              text=" Have a project in mind? I'd love to hear about it. Let's create something amazing together."
+              className="text-lg md:text-xl lg:text-2xl font-light text-off-white/70 max-w-2xl leading-relaxed mb-6 md:mb-8"
+              delay={0.1}
+            ></WordReveal>
 
             <motion.a
               href="mailto:calebephrem@proton.me"
-              className="inline-flex items-center gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-medium hoverable group flex-wrap"
+              className="inline-flex text-2xl items-center gap-3 …"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               whileHover={{ x: 10 }}
-              transition={{ duration: 0.3 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
+              viewport={{ once: true }}
             >
               <Mail size={20} className="md:w-6 md:h-6" />
               <span>calebephrem@proton.me</span>
@@ -139,8 +167,27 @@ const Contact: React.FC = () => {
         </div>
 
         {/* Bottom info */}
-        <div className="mt-16 md:mt-24 lg:mt-32 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8">
-          <div className="w-full md:w-auto">
+        <motion.div
+          className="mt-16 md:mt-24 lg:mt-32 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+        >
+          <motion.div
+            className="w-full md:w-auto"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+              },
+            }}
+          >
             <p className="text-xs md:text-sm font-mono tracking-widest text-off-white/50 mb-2 md:mb-3">
               LOCATION
             </p>
@@ -148,9 +195,21 @@ const Contact: React.FC = () => {
               <MapPin size={16} className="md:w-5 md:h-5 text-accent" />
               Addis Ababa, Ethiopia
             </p>
-          </div>
+          </motion.div>
 
-          <div className="w-full md:w-auto">
+          <motion.div
+            className="w-full md:w-auto"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+              },
+            }}
+          >
+            {" "}
+            {/* AVAILABLE */}
             <p className="text-xs md:text-sm font-mono tracking-widest text-off-white/50 mb-2 md:mb-3">
               AVAILABILE
             </p>
@@ -158,13 +217,36 @@ const Contact: React.FC = () => {
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               Let's Build Something
             </p>
-          </div>
+          </motion.div>
 
-          <div className="w-full md:w-auto">
+          <motion.div
+            className="w-full md:w-auto"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+              },
+            }}
+          >
+            {" "}
+            {/* SOCIAL */}
             <p className="text-xs md:text-sm font-mono tracking-widest text-off-white/50 mb-2 md:mb-3">
               SOCIAL
             </p>
-            <div className="flex gap-4 md:gap-6 flex-wrap">
+            <motion.div
+              className="flex gap-4 md:gap-6 flex-wrap"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+                },
+              }}
+            >
               {[
                 {
                   icon: Github,
@@ -196,9 +278,9 @@ const Contact: React.FC = () => {
                   </a>
                 </>
               ))}
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

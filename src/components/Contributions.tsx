@@ -103,13 +103,25 @@ const Contributions: React.FC = () => {
       <div className="max-w-7xl mx-auto z-10 w-full">
         {/* Header Logic */}
         <div className="mb-8">
-          <motion.h2
-            className="font-pixel text-xl md:text-2xl mb-4"
-            style={{ fontFamily: '"Press Start 2P", cursive' }}
+          <div className="overflow-hidden mb-4">
+            <motion.h2
+              className="font-pixel text-xl md:text-2xl"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+              initial={{ clipPath: "inset(0 100% 0 0)" }}
+              whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+              transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true }}
+            >
+              CONTRIBUTIONS
+            </motion.h2>
+          </div>
+          <motion.p
+            className="text-off-white/50 font-mono text-xs tracking-widest"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            viewport={{ once: true }}
           >
-            CONTRIBUTIONS
-          </motion.h2>
-          <p className="text-off-white/50 font-mono text-xs tracking-widest">
             {totalContributions} contributions in the last year •
             <a
               href={`https://github.com/${USERNAME}`}
@@ -117,12 +129,18 @@ const Contributions: React.FC = () => {
             >
               @{USERNAME}
             </a>
-          </p>
+          </motion.p>
         </div>
 
         <div className="inline-block">
           {/* Month Labels Row */}
-          <div className="flex text-[10px] font-mono text-off-white/30 mb-2 h-4">
+          <motion.div
+            className="flex text-[10px] font-mono text-off-white/30 mb-2 h-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            viewport={{ once: true }}
+          >
             <div className="w-8" /> {/* Offset for day labels */}
             <div className="flex gap-[3px]">
               {weeks.map((week, i) => {
@@ -159,11 +177,17 @@ const Contributions: React.FC = () => {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
 
           <div className="flex gap-2">
             {/* Day Labels Column */}
-            <div className="flex flex-col gap-[3px] h-[158px] justify-start pt-[2px]">
+            <motion.div
+              className="flex flex-col gap-[3px] h-[158px] justify-start pt-[2px]"
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              viewport={{ once: true }}
+            >
               {[0, 1, 2, 3, 4, 5, 6].map((idx) => {
                 const label = dayLabels.find((d) => d.index === idx);
                 return (
@@ -174,12 +198,23 @@ const Contributions: React.FC = () => {
                   </div>
                 );
               })}
-            </div>
+            </motion.div>
 
             {/* The Grid */}
             <div className="flex gap-[3px]">
               {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-[3px]">
+                <motion.div
+                  key={weekIndex}
+                  className="flex flex-col gap-[3px]"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: weekIndex * 0.012, // ~0.6s total stagger across 52 weeks
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                  viewport={{ once: true, margin: "-40px" }}
+                >
                   {week.contributionDays.map(
                     (day: ContributionDay, dayIndex: number) => {
                       const level = getLevel(day.contributionCount);
@@ -213,13 +248,19 @@ const Contributions: React.FC = () => {
                       );
                     },
                   )}
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
 
           {/* Legend */}
-          <div className="flex justify-end items-center gap-2 mt-4">
+          <motion.div
+            className="flex justify-end items-center gap-2 mt-4"
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            viewport={{ once: true }}
+          >
             <span className="text-off-white/30 font-mono text-[10px]">
               Less
             </span>
@@ -229,7 +270,7 @@ const Contributions: React.FC = () => {
             <span className="text-off-white/30 font-mono text-[10px]">
               More
             </span>
-          </div>
+          </motion.div>
         </div>
       </div>
 

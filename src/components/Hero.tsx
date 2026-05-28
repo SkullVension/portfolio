@@ -132,9 +132,7 @@ const Hero: React.FC = () => {
         const data = await res.json();
 
         setStatus({
-          status:
-            data.data.discord_status.slice(0, 1).toUpperCase() +
-            data.data.discord_status.slice(1).toLowerCase(),
+          status: data.data.discord_status,
           activity: data.data.activities?.[0]?.name || null,
         });
 
