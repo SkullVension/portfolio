@@ -149,7 +149,7 @@ const DesktopStack: React.FC = () => {
                       strokeWidth={1.5}
                     />
                   </div>
-                  <h3 className="text-2xl md:text-4xl lg:text-6xl font-semibold mb-4 md:mb-6 leading-tight">
+                  <h3 className="text-2xl md:text-3xl lg:text-5xl font-semibold mb-4 md:mb-6 leading-tight font-pixel">
                     {item.title}
                   </h3>
                   <p className="text-base md:text-lg lg:text-xl leading-relaxed text-off-white/70 max-w-lg">
