@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import Lenis from "lenis";
 import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
@@ -39,5 +40,6 @@ function Root() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Root />
+    <Analytics />
   </StrictMode>,
 );
