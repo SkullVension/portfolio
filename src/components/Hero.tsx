@@ -3,6 +3,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import ShinyText from "./ui/ShinyText";
+import TextType from "./ui/TextType";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,9 +15,6 @@ const headlines = [
 ];
 
 const Hero: React.FC = () => {
-  const [currentHeadline, setCurrentHeadline] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
   const [status, setStatus] = useState<
     | {
         status: string;
@@ -27,31 +26,6 @@ const Hero: React.FC = () => {
   const bgRef1 = useRef<HTMLDivElement>(null);
   const bgRef2 = useRef<HTMLDivElement>(null);
   const bgRef3 = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const currentText = headlines[currentHeadline];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (displayText.length < currentText.length) {
-            setDisplayText(currentText.slice(0, displayText.length + 1));
-          } else {
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
-        } else {
-          if (displayText.length > 0) {
-            setDisplayText(displayText.slice(0, -1));
-          } else {
-            setIsDeleting(false);
-            setCurrentHeadline((prev) => (prev + 1) % headlines.length);
-          }
-        }
-      },
-      isDeleting ? 30 : 80,
-    );
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentHeadline]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -194,28 +168,29 @@ const Hero: React.FC = () => {
 
       {/* Main content */}
       <div className="relative z-10 text-center px-6 md:px-12 max-w-7xl mx-auto w-full">
-        {/* Location badge */}
+        {/* Status badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-6 md:mb-8"
         >
-          <span className="inline-flex items-center gap-2 text-xs md:text-sm font-mono tracking-widest text-gray-warm-600 bg-white/50 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full">
-            <span
-              className={`w-2 h-2 rounded-full ${statusColor[status?.status?.toLowerCase() as keyof typeof statusColor]}`}
-            />
-            {status?.activity && status?.status
-              ? `${status.status} • ${status.activity}`
-              : status?.status
-                ? status.status
-                : "Offline"}
-          </span>
+          {status?.status &&
+            status.status.toLocaleLowerCase() !== "offline" && (
+              <span className="inline-flex items-center gap-2 text-xs md:text-sm font-mono tracking-widest text-gray-warm-600 bg-white/50 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full">
+                <span
+                  className={`w-2 h-2 rounded-full ${statusColor[status?.status?.toLowerCase() as keyof typeof statusColor]}`}
+                />
+                {status.activity
+                  ? `${status.status} • ${status.activity}`
+                  : status?.status}
+              </span>
+            )}
         </motion.div>
 
         {/* Main heading with staggered clip-path reveal */}
         {words.map((word, wordIndex) => (
-          <div key={word} className="overflow-hidden mb-1 md:mb-2">
+          <div key={wordIndex} className="overflow-hidden mb-1 md:mb-2">
             <motion.h1
               className="font-pixel text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight"
               style={{ fontFamily: '"Press Start 2P", cursive' }}
@@ -234,7 +209,27 @@ const Hero: React.FC = () => {
                 },
               }}
             >
-              {word}
+              {word.split(" ").map((w, i) => (
+                <span key={i}>
+                  {w.toLowerCase() === "caleb" ? (
+                    <ShinyText
+                      text={w}
+                      speed={2}
+                      delay={1.375}
+                      color="#ff6b35"
+                      shineColor="#ffcfaf"
+                      spread={120}
+                      direction="left"
+                      yoyo={false}
+                      pauseOnHover={false}
+                      disabled={false}
+                    />
+                  ) : (
+                    w
+                  )}
+                  {i < word.split(" ").length - 1 ? " " : ""}
+                </span>
+              ))}
             </motion.h1>
           </div>
         ))}
@@ -246,9 +241,15 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="mt-4 md:mt-8 h-8 md:h-12 lg:h-16"
         >
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-light text-gray-warm-700">
-            <span className="border-r-2 border-accent pr-1">{displayText}</span>
-          </h2>
+          <TextType
+            text={headlines}
+            typingSpeed={75}
+            pauseDuration={1500}
+            deletingSpeed={50}
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-light text-gray-warm-700"
+            showCursor
+            cursorCharacter="|"
+          />
         </motion.div>
 
         {/* Subtext */}

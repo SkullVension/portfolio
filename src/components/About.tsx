@@ -2,31 +2,58 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useEffect, useRef, useState } from "react";
+import CountUp from "./ui/CountUp";
 import WordReveal from "./ui/WordReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const skills = [
-  "React",
-  "Next.js",
-  "Tailwind",
+  // Languages
   "JavaScript",
   "TypeScript",
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "Firebase",
-  "React Native",
-  "Expo",
-  "Three.js",
+  "HTML5",
+  "CSS3",
+  "Bash",
+
+  // Frontend
+  "React",
+  "Next.js",
+  "Tailwind CSS",
   "Framer Motion",
   "GSAP",
+  "Three.js",
   "Vite",
-  "Figma",
   "Bootstrap",
-];
+  "Shadcn/ui",
+  "React Bits",
 
-const skillsRow2 = [...skills].reverse();
+  // Mobile
+  "React Native",
+  "Expo",
+
+  // Backend
+  "Node.js",
+  "Express",
+  "GraphQL",
+
+  // Databases
+  "MongoDB",
+  "Firebase",
+  "Mongoose",
+
+  // DevOps & Cloud
+  "Git & GitHub",
+  "CI / CD",
+  "Vercel",
+  "Railway",
+  "Render",
+
+  // Tools & Environment
+  "VS Code",
+  "Arch Linux",
+  "Figma",
+  "Postman",
+];
 
 function useCounter(target: number, duration = 1.5, shouldStart: boolean) {
   const [count, setCount] = useState(0);
@@ -55,7 +82,6 @@ const StatItem: React.FC<{ value: string; label: string; index: number }> = ({
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const isNumeric = /^\d+/.test(value);
   const numericPart = isNumeric ? parseInt(value) : 0;
-  const suffix = isNumeric ? value.replace(/^\d+/, "") : value;
   const count = useCounter(numericPart, 1.8, inView && isNumeric);
 
   return (
@@ -88,7 +114,22 @@ const StatItem: React.FC<{ value: string; label: string; index: number }> = ({
         }}
         viewport={{ once: true }}
       >
-        {isNumeric ? `${count}${suffix}` : value}
+        {isNumeric ? (
+          <>
+            <CountUp
+              from={0}
+              to={count}
+              // separator=""
+              direction="up"
+              duration={1}
+              className="count-up-text"
+              delay={0}
+            />
+            +
+          </>
+        ) : (
+          value
+        )}
       </motion.p>
       <p className="text-xs md:text-sm text-gray-warm-600">{label}</p>
     </motion.div>
@@ -99,14 +140,12 @@ const About: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const bgShapeRef = useRef<HTMLDivElement>(null);
   const parallaxBlobRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const bgShapeY = useTransform(scrollYProgress, [0, 1], [60, -60]);
   const blobY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
   const blobScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
 
@@ -226,14 +265,13 @@ const About: React.FC = () => {
             </motion.p>
 
             <div className="flex flex-wrap gap-2 md:gap-3">
-              {skills.map((skill, index) => (
+              {skills.map((skill) => (
                 <motion.span
                   key={skill}
                   initial={{ opacity: 0, scale: 0.8, y: 10 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{
-                    duration: 0.4,
-                    delay: index * 0.045,
+                    duration: 0.1,
                     ease: [0.34, 1.56, 0.64, 1],
                   }}
                   viewport={{ once: true }}
@@ -254,14 +292,14 @@ const About: React.FC = () => {
         {/* Stats */}
         <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
           {[
-            { value: "3+", label: "Years Experience" },
-            { value: "30+", label: "Projects Delivered" },
-            { value: "3000+", label: "Hours of Coding" },
+            { value: 3, label: "Years Experience" },
+            { value: 30, label: "Projects Delivered" },
+            { value: 3000, label: "Hours of Coding" },
             { value: "∞", label: "Coffee Consumed" },
           ].map((stat, index) => (
             <StatItem
               key={stat.label}
-              value={stat.value}
+              value={stat.value.toString()}
               label={stat.label}
               index={index}
             />
