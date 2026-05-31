@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
 import Navbar from "./components/Navbar";
+import NotFound from "./components/NotFound";
 import Projects from "./components/Projects";
 import ScrollProgress from "./components/ScrollProgress";
 import Stack from "./components/Stack";
@@ -46,6 +47,7 @@ function App() {
         path="/discord"
         element={<ExternalRedirect to="https://discord.gg/calebephrem" />}
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
