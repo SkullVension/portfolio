@@ -1,5 +1,4 @@
-import Lenis from "lenis";
-import { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Contributions from "./components/Contributions";
@@ -10,36 +9,13 @@ import Navbar from "./components/Navbar";
 import Projects from "./components/Projects";
 import ScrollProgress from "./components/ScrollProgress";
 import Stack from "./components/Stack";
+import ExternalRedirect from "./ExternalRedirect";
 
-function App() {
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
-
+function Home() {
   return (
     <div className="relative bg-off-white text-near-black w-full overflow-x-hidden">
       <Navbar />
       <ScrollProgress />
-
       <main className="w-full overflow-x-hidden">
         <Hero />
         <About />
@@ -49,9 +25,28 @@ function App() {
         <Marquee />
         <Contact />
       </main>
-
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route
+        path="/github"
+        element={<ExternalRedirect to="https://github.com/calebephrem" />}
+      />
+      <Route
+        path="/twitter"
+        element={<ExternalRedirect to="https://x.com/calebephrem" />}
+      />
+      <Route
+        path="/discord"
+        element={<ExternalRedirect to="https://discord.gg/calebephrem" />}
+      />
+    </Routes>
   );
 }
 

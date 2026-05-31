@@ -265,17 +265,17 @@ const Contact: React.FC = () => {
                 {
                   icon: Github,
                   label: "GitHub",
-                  href: "https://github.com/calebephrem",
+                  href: "/github",
                 },
                 {
                   icon: MessageCircle,
                   label: "Discord",
-                  href: "https://discord.gg/calebephrem",
+                  href: "/discord",
                 },
                 {
                   icon: Twitter,
                   label: "Twitter",
-                  href: "https://x.com/calebephrem",
+                  href: "/twitter",
                 },
               ].map(({ icon: Icon, label, href }) => (
                 <a
