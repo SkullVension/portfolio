@@ -8,6 +8,8 @@ import {
   Twitter,
 } from "lucide-react";
 import React, { useEffect, useRef } from "react";
+import CircularText from "./ui/CircularText";
+import Shuffle from "./ui/Shuffle";
 import WordReveal from "./ui/WordReveal";
 
 const Contact: React.FC = () => {
@@ -85,85 +87,101 @@ const Contact: React.FC = () => {
           >
             LET'S WORK TOGETHER
           </motion.h2>
-          {/* <motion.div
-            className="h-px bg-off-white/20 origin-left mt-4"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{
-              duration: 1.2,
-              delay: 0.3,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            viewport={{ once: true }}
-          /> */}
         </div>
 
-        {/* Large magnetic text */}
-        <div ref={containerRef} className="relative">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.9,
-              delay: 0.2,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            viewport={{ once: true }}
-          >
-            <motion.a
-              href="mailto:calebephrem@proton.me"
-              className="block group relative w-full"
-              style={{ x: springX, y: springY }}
-              transition={{ type: "spring", stiffness: 150, damping: 20 }}
-            >
-              <motion.h3
-                className="font-pixel text-8xl md:text-6xl lg:text-8xl leading-none fill-text transition-all duration-500 group-hover:[-webkit-text-fill-color:#FAFAFA] hoverable text-center md:text-left"
-                style={{
-                  fontFamily: '"Press Start 2P", cursive',
-                  WebkitTextStrokeWidth: "2px",
-                  WebkitTextStrokeColor: "#FAFAFA",
-                  WebkitTextFillColor: "transparent",
-                  animation: "blink-fill 3s step-end infinite",
-                }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                SAY HI
-              </motion.h3>
-            </motion.a>
-          </motion.div>
-
-          <div className="mt-8 md:mt-12 lg:mt-16">
-            <WordReveal
-              text=" Have a project in mind? I'd love to hear about it. Let's create something amazing together."
-              className="text-lg md:text-xl lg:text-2xl font-light text-off-white/70 max-w-2xl leading-relaxed mb-6 md:mb-8"
-              delay={0.1}
-            ></WordReveal>
-
-            <motion.a
-              href="mailto:calebephrem@proton.me"
-              className="inline-flex text-2xl items-center gap-3 …"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              whileHover={{ x: 10 }}
+        {/* Large magnetic text + circular text side by side */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12 md:gap-8">
+          {/* Left: SAY HI + email */}
+          <div ref={containerRef} className="relative flex-1">
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.6,
-                delay: 0.5,
+                duration: 0.9,
+                delay: 0.2,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
               viewport={{ once: true }}
             >
-              <Mail size={20} className="md:w-6 md:h-6" />
-              <span>calebephrem@proton.me</span>
-              <motion.span
-                className="inline-block"
-                whileHover={{ x: 5, y: -5 }}
-                transition={{ duration: 0.2 }}
+              <motion.a
+                href="mailto:calebephrem@proton.me"
+                className="block group relative w-full"
+                style={{ x: springX, y: springY }}
+                transition={{ type: "spring", stiffness: 150, damping: 20 }}
               >
-                <ArrowRight size={20} />
-              </motion.span>
-            </motion.a>
+                <Shuffle
+                  text="SAY HI"
+                  className="font-pixel text-8xl md:text-6xl lg:text-8xl leading-none transition-all duration-500 text-[#FAFAFA] hoverable text-center md:text-left"
+                  shuffleDirection="right"
+                  duration={0.35}
+                  animationMode="evenodd"
+                  shuffleTimes={1}
+                  ease="power3.out"
+                  stagger={0.03}
+                  threshold={0.1}
+                  triggerOnce={true}
+                  respectReducedMotion={true}
+                  loop={true}
+                  loopDelay={3}
+                />
+              </motion.a>
+            </motion.div>
+
+            <div className="mt-8 md:mt-12 lg:mt-16">
+              <WordReveal
+                text="Have a project in mind? I'd love to hear about it. Let's create something amazing together."
+                className="text-lg md:text-xl lg:text-2xl font-light text-off-white/70 max-w-2xl leading-relaxed mb-6 md:mb-8"
+                delay={0.1}
+              />
+
+              <motion.a
+                href="mailto:calebephrem@proton.me"
+                className="inline-flex text-2xl items-center gap-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ x: 10 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.5,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                viewport={{ once: true }}
+              >
+                <Mail size={20} className="md:w-6 md:h-6" />
+                <span>calebephrem@proton.me</span>
+                <motion.span
+                  className="inline-block"
+                  whileHover={{ x: 5, y: -5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ArrowRight size={20} />
+                </motion.span>
+              </motion.a>
+            </div>
           </div>
+
+          {/* Right: Circular Text */}
+          <motion.div
+            className="flex items-center justify-center md:justify-end flex-shrink-0"
+            style={{ marginTop: "-64px" }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.4,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            viewport={{ once: true }}
+          >
+            <CircularText
+              // text="AVAILABLE FOR WORK • OPEN TO PROJECTS •"
+              text="SLIDE INTO MY INBOX • LET'S COOK SOMETHING • "
+              onHover="slowDown"
+              spinDuration={12}
+              className="text-off-white/70"
+              radius={200}
+            />
+          </motion.div>
         </div>
 
         {/* Bottom info */}
@@ -208,10 +226,8 @@ const Contact: React.FC = () => {
               },
             }}
           >
-            {" "}
-            {/* AVAILABLE */}
             <p className="text-xs md:text-sm font-mono tracking-widest text-off-white/50 mb-2 md:mb-3">
-              AVAILABILE
+              AVAILABLE
             </p>
             <p className="text-base md:text-lg flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -230,8 +246,6 @@ const Contact: React.FC = () => {
               },
             }}
           >
-            {" "}
-            {/* SOCIAL */}
             <p className="text-xs md:text-sm font-mono tracking-widest text-off-white/50 mb-2 md:mb-3">
               SOCIAL
             </p>
@@ -264,19 +278,17 @@ const Contact: React.FC = () => {
                   href: "https://x.com/calebephrem",
                 },
               ].map(({ icon: Icon, label, href }) => (
-                <>
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-base md:text-lg hoverable relative group flex items-center gap-3"
-                  >
-                    <Icon size={16} className="md:w-5 md:h-5" />
-                    <span>{label}</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-                  </a>
-                </>
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-base md:text-lg hoverable relative group flex items-center gap-3"
+                >
+                  <Icon size={16} className="md:w-5 md:h-5" />
+                  <span>{label}</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+                </a>
               ))}
             </motion.div>
           </motion.div>

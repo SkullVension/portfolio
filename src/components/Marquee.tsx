@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
 import { Code2, Github, Layers, Palette, Server, Wand2 } from "lucide-react";
-import React from "react";
+import ScrollVelocity from "./ui/ScrollVelocity";
 
 const marqueeItems = [
   { text: "FULL STACK DEVELOPER", icon: Layers },
@@ -11,79 +10,45 @@ const marqueeItems = [
   { text: "OPEN SOURCE CONTRIBUTOR", icon: Github },
 ];
 
-interface MarqueeRowProps {
-  items: typeof marqueeItems;
-  direction?: "left" | "right";
-  textColor: string;
-  iconColor?: string;
-  reverseIconOrder?: boolean;
-}
-
-const MarqueeRow: React.FC<MarqueeRowProps> = ({
-  items,
-  direction = "left",
-  textColor,
-  iconColor = "",
-  reverseIconOrder = false,
-}) => {
-  const isLeft = direction === "left";
-
-  return (
-    <div className="relative flex overflow-hidden">
-      <motion.div
-        className="flex whitespace-nowrap gap-8 md:gap-16 pr-8 md:pr-16"
-        animate={{ x: isLeft ? [0, "-50%"] : ["-50%", 0] }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 30,
-            ease: "linear",
-          },
-        }}
+const renderRow = (
+  items: typeof marqueeItems,
+  textColor: string,
+  iconColor: string,
+  reverseIconOrder: boolean,
+) =>
+  items.map((item, i) => {
+    const Icon = item.icon;
+    return (
+      <span
+        key={i}
+        className={`inline-flex items-center gap-2 md:gap-4 text-sm md:text-xl lg:text-3xl ${textColor} mr-8 md:mr-16`}
+        style={{ fontFamily: '"Press Start 2P", cursive' }}
       >
-        {[...items, ...items].map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <span
-              key={index}
-              className={`inline-flex items-center gap-2 md:gap-4 font-pixel text-sm md:text-xl lg:text-3xl ${textColor}`}
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
-            >
-              {/* Row 1 */}
-              {!reverseIconOrder && (
-                <Icon size={16} className={`md:w-6 md:h-6 ${iconColor}`} />
-              )}
+        {!reverseIconOrder && (
+          <Icon size={16} className={`md:w-6 md:h-6 ${iconColor}`} />
+        )}
+        {item.text}
+        {reverseIconOrder && <Icon size={16} className="md:w-6 md:h-6" />}
+      </span>
+    );
+  });
 
-              {item.text}
-
-              {/* Row 2 */}
-              {reverseIconOrder && <Icon size={16} className="md:w-6 md:h-6" />}
-            </span>
-          );
-        })}
-      </motion.div>
-    </div>
-  );
-};
+const row1 = (
+  <>{renderRow(marqueeItems, "text-near-black", "text-accent", false)}</>
+);
+const row2 = (
+  <>{renderRow([...marqueeItems].reverse(), "text-gray-warm-300", "", true)}</>
+);
 
 const Marquee: React.FC = () => {
   return (
     <section className="py-12 md:py-16 lg:py-24 bg-off-white w-full overflow-hidden flex flex-col gap-3 md:gap-4">
-      {/* Row 1: Left to right */}
-      <MarqueeRow
-        items={marqueeItems}
-        direction="left"
-        textColor="text-near-black"
-        iconColor="text-accent"
-      />
-
-      {/* Row 2: Right to left */}
-      <MarqueeRow
-        items={[...marqueeItems].reverse()}
-        direction="right"
-        textColor="text-gray-warm-300"
-        reverseIconOrder={true}
+      <ScrollVelocity
+        texts={[row1, row2]}
+        velocity={80}
+        className=""
+        parallaxClassName="w-full"
+        scrollerClassName="flex items-center gap-0"
       />
     </section>
   );
