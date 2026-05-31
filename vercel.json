@@ -1,0 +1,20 @@
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "redirects": [
+    {
+      "source": "/github",
+      "destination": "https://github.com/calebephrem",
+      "permanent": false
+    },
+    {
+      "source": "/twitter",
+      "destination": "https://x.com/calebephrem",
+      "permanent": false
+    },
+    {
+      "source": "/discord",
+      "destination": "https://discord.gg/calebephrem",
+      "permanent": false
+    }
+  ]
+}
